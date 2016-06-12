@@ -52,16 +52,21 @@ def generate_data(length):
 ## problem with script is memory error on large files :(
 
 def shred(file_name,  passes):
-    if not os.path.isfile(file_name):
-        print(file_name + " is not a file.")
+    try:
+        if not os.path.isfile(file_name):
+            print(file_name + " is not a file.")
+            return False
+
+        ld = os.path.getsize(file_name)
+        fh = open(file_name,  "w")
+        for _ in range(int(passes)):
+            data = generate_data(ld)
+            fh.write(data)
+            fh.seek(0,  0)
+
+        fh.close()
+        os.remove(file_name)
+        return True
+
+    except:
         return False
-
-    ld = os.path.getsize(file_name)
-    fh = open(file_name,  "w")
-    for _ in range(int(passes)):
-        data = generate_data(ld)
-        fh.write(data)
-        fh.seek(0,  0)
-
-    fh.close()
-    os.remove(file_name)
